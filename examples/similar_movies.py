@@ -1,12 +1,6 @@
-"""
-The fun demo: "if you liked X, here are movies like it."
+"""Movies most similar to a given title (item-item CF).
 
-Trains item-item CF, then prints the nearest neighbors for a few well-known
-films. Pass your own title (or part of one) as an argument.
-
-Run:  python examples/similar_movies.py
-      python examples/similar_movies.py "Star Wars"
-"""
+Usage: python examples/similar_movies.py 'Star Wars'"""
 
 import os
 import sys

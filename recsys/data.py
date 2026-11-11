@@ -1,11 +1,4 @@
-"""
-MovieLens 100K loader.
-
-Downloads the classic GroupLens dataset once (~5 MB), caches it under
-data/ml-100k/, and hands back plain NumPy arrays. MovieLens 100K is the
-"hello world" of recommender research: 943 users, 1682 movies, 100,000 ratings
-on a 1-5 scale. Small enough to run on a laptop, real enough to be honest.
-"""
+"""MovieLens 100K loading and train/test split. Downloads and caches the data on first use."""
 
 import io
 import os
@@ -43,8 +36,8 @@ def download_movielens(cache_dir=None):
 def load_ratings(cache_dir=None):
     """Return (users, items, ratings) as 0-indexed int/float arrays."""
     cache_dir = download_movielens(cache_dir)
-    data = np.loadtxt(os.path.join(cache_dir, "u.data"), dtype=int)  # user item rating timestamp
-    users = data[:, 0] - 1   # make ids 0-based
+    data = np.loadtxt(os.path.join(cache_dir, "u.data"), dtype=int)
+    users = data[:, 0] - 1
     items = data[:, 1] - 1
     ratings = data[:, 2].astype(float)
     return users, items, ratings

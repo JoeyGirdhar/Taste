@@ -1,13 +1,4 @@
-"""
-Train every model and print one honest comparison table.
-
-This is the "measured, not vibes" centerpiece: same train/test split for all
-models, same metrics, side by side. It makes the story obvious -- personalization
-(matrix factorization) beats knowing-nothing (global mean) by a wide margin, and
-you can see exactly how much each idea buys you.
-
-Run:  python examples/evaluate_all.py
-"""
+"""Train every model and print a comparison table."""
 
 import os
 import sys
@@ -52,7 +43,7 @@ def main():
     print(f"{'Model':22s} {'RMSE':>7s} {'MAE':>7s} {'P@10':>7s} {'R@10':>7s} {'train(s)':>9s}")
     print("-" * 78)
     for name, r, m, p, rec, sec in rows:
-        p_s = "  -  " if p != p else f"{p:.3f}"     # p != p is True for NaN
+        p_s = "  -  " if p != p else f"{p:.3f}"
         rec_s = "  -  " if rec != rec else f"{rec:.3f}"
         print(f"{name:22s} {r:7.4f} {m:7.4f} {p_s:>7s} {rec_s:>7s} {sec:9.1f}")
     print("=" * 78)

@@ -1,14 +1,4 @@
-"""
-Sanity tests -- fast, no dataset download required.
-
-- Metrics return known values on hand-checkable inputs.
-- Matrix factorization can actually LEARN: on a tiny synthetic dataset built
-  from real latent factors, its training error should drop close to zero. If
-  the SGD update is wrong, this fails.
-
-Run directly:  python tests/test_recsys.py
-Or with pytest: pytest -q
-"""
+"""Metric checks and a test that MF can recover a low rank matrix."""
 
 import os
 import sys
@@ -24,7 +14,7 @@ from recsys import MatrixFactorization
 def test_metrics_known_values():
     pred = np.array([3.0, 4.0, 2.0])
     actual = np.array([2.0, 4.0, 4.0])
-    # errors: 1, 0, -2  -> MAE = (1+0+2)/3 = 1.0, RMSE = sqrt((1+0+4)/3) = sqrt(5/3)
+    # errors 1, 0, -2: MAE 1.0, RMSE sqrt(5/3)
     assert abs(mae(pred, actual) - 1.0) < 1e-9
     assert abs(rmse(pred, actual) - np.sqrt(5 / 3)) < 1e-9
     print("[metrics] known-value check OK")
@@ -36,7 +26,7 @@ def test_mf_can_learn():
     n_users, n_items, k = 40, 30, 3
     P = rng.normal(0, 1, (n_users, k))
     Q = rng.normal(0, 1, (n_items, k))
-    true = 3.0 + P @ Q.T                              # a clean low-rank rating matrix
+    true = 3.0 + P @ Q.T
 
     u, i, r = [], [], []
     for uu in range(n_users):

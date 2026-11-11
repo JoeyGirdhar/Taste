@@ -1,16 +1,4 @@
-"""
-Evaluation metrics.
-
-Two families, because "good recommender" means two different things:
-
-- Rating accuracy: how close are predicted ratings to actual ones?  -> RMSE, MAE
-- Ranking quality: are the items we put at the TOP the ones the user liked?
-  -> Precision@K, Recall@K
-
-Ranking metrics matter more in practice (nobody reads predicted star values;
-they look at the top of the list), which is exactly why a model can win on RMSE
-and still recommend poorly. Reporting both is the honest thing to do.
-"""
+"""Rating metrics (RMSE, MAE) and ranking metrics (precision/recall at k)."""
 
 import numpy as np
 
@@ -56,9 +44,9 @@ def precision_recall_at_k(model, train, test, n_items, k=10, relevant_threshold=
     precisions, recalls = [], []
     all_items = np.arange(n_items)
     for u, rel_items in relevant.items():
-        scores = model.predict_all_items(u)          # length n_items
+        scores = model.predict_all_items(u)
         scores = scores.copy()
-        for i in seen.get(u, ()):                     # never recommend seen items
+        for i in seen.get(u, ()):
             scores[i] = -np.inf
         top_k = all_items[np.argsort(-scores)[:k]]
         hits = len(set(top_k.tolist()) & rel_items)

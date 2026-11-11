@@ -1,13 +1,4 @@
-"""
-Baselines. Always ship a dumb model first -- it's the yardstick every fancy
-model has to beat, and it's shocking how often a "state of the art" idea barely
-edges out predicting the global average.
-
-GlobalMean:   predict the same number (the overall average rating) for everyone.
-BiasModel:    predict mu + user_bias + item_bias. Captures "Alice rates
-              everything high" and "this movie is widely loved" without any
-              personalization. A genuinely strong, fast baseline.
-"""
+"""Baselines: global mean and a user/item bias model."""
 
 import numpy as np
 
